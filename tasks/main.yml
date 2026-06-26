@@ -1,0 +1,10 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for ansible-role-proxy
+- name: "Proxy | setup a certificate if none exists"
+  ansible.builtin.include_tasks:
+    file: ssl_cert.yml
+
+- name: "Proxy | Install via external apache role"
+  ansible.builtin.include_role:
+    name: ansible-role-apache

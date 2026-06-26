@@ -1,0 +1,12 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for ansible-role-proxy
+apache_mods_enabled:
+  - rewrite
+  - ssl
+  - proxy_http
+  - http2
+  - headers
+  - proxy
+apache_vhosts_filename: "{{ ansible_hostname }}.conf"
+apache_vhosts_template: 'proxy.conf.j2'
