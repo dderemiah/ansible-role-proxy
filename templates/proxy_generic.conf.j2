@@ -1,11 +1,11 @@
 <VirtualHost *:443>
-    ServerName {{ ansible_fqdn }}
-    ServerAlias {{ ansible_hostname }}
+    ServerName {{ ansible_facts['fqdn'] }}
+    ServerAlias {{ ansible_facts['hostname'] }}
 
     SSLEngine On
-    SSLCertificateFile /etc/apache2/sslcerts/{{ ansible_hostname }}.crt
+    SSLCertificateFile /etc/apache2/sslcerts/{{ ansible_facts['hostname'] }}.crt
     #SSLCertificateChainFile /etc/apache2/sslcerts/chain.pem
-    SSLCertificateKeyFile /etc/apache2/sslcerts/{{ ansible_hostname }}.key
+    SSLCertificateKeyFile /etc/apache2/sslcerts/{{ ansible_facts['hostname'] }}.key
  
     ProxyRequests     Off
     ProxyPreserveHost On
@@ -15,8 +15,8 @@
         Allow from all
     </Proxy>
 
-    ProxyPass         /  http://localhost:8080/ nocanon
-    ProxyPassReverse  /  http://localhost:8080/
+    ProxyPass         /  http://localhost:3000/ nocanon
+    ProxyPassReverse  /  http://localhost:3000/
     RequestHeader set X-Forwarded-Proto "https"
     RequestHeader set X-Forwarded-Port "443"
     SSLSessionTickets off
@@ -31,7 +31,7 @@
 </VirtualHost>
 
 <VirtualHost *:80>
-    ServerName  {{ ansible_fqdn }}
-    ServerAlias {{ ansible_hostname }}
-    Redirect permanent / https://{{ ansible_fqdn }}/
+    ServerName  {{ ansible_facts['fqdn'] }}
+    ServerAlias {{ ansible_facts['hostname'] }}
+    Redirect permanent / https://{{ ansible_facts['fqdn'] }}/
 </VirtualHost>

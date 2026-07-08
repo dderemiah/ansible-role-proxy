@@ -8,6 +8,6 @@ apache_mods_enabled:
   - http2
   - headers
   - proxy
-apache_vhosts_filename: "{{ ansible_hostname }}.conf"
-apache_vhosts_template: 'proxy.conf.j2'
+  - proxy_wstunnel
+apache_vhosts_filename: "{{ ansible_facts['hostname'] }}.conf"
 apache_remove_default_vhost: true

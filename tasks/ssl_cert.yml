@@ -6,14 +6,15 @@
     state: directory
     mode: '0755'
     owner: 'root'
+
 - name: create a new key
   ansible.builtin.shell:
-    cmd: 'openssl req -new -newkey rsa:2048 -nodes -keyout {{ ansible_hostname }}.key -out {{ ansible_hostname }}.csr -subj "/C=US/ST=CA/L=Alameda/O=Wind River systems, Inc./CN={{ ansible_fqdn }}" -addext "subjectAltName=DNS:{{ ansible_hostname }}.wrs.com,DNS:{{ ansible_hostname }},DNS:{{ ansible_fqdn }},DNS:{{ ansible_hostname }}.corp.ad.wrs.com,DNS:{{ ansible_hostname }}.idm.wrs.com"'
+    cmd: openssl req -new -newkey rsa:2048 -nodes -keyout {{ ansible_facts['fqdn'] }}.key -out {{ ansible_facts['fqdn'] }}.csr -subj "/C=US/ST=CA/L=Alameda/O=Wind River systems, Inc./CN={{ ansible_facts['fqdn'] }}" -addext "subjectAltName=DNS:{{ ansible_facts['hostname'] }}.wrs.com,DNS:{{ ansible_facts['hostname'] }},DNS:{{ ansible_facts['hostname'] }}.corp.ad.wrs.com,DNS:{{ ansible_facts['hostname'] }}.idm.wrs.com"
     chdir: /etc/apache2/sslcerts
-    creates: '{{ ansible_hostname }}.key'
+    creates: "{{ ansible_facts['fqdn'] }}.key"
 
 - name: self sign the cert
   ansible.builtin.shell:
-    cmd: 'openssl x509 -req -in {{ ansible_hostname }}.csr -signkey {{ ansible_hostname }}.key -out {{ ansible_hostname }}.crt -days 365'
+    cmd: openssl x509 -req -in {{ ansible_facts['fqdn'] }}.csr -signkey {{ ansible_facts['fqdn'] }}.key -out {{ ansible_facts['fqdn'] }}.crt -days 365
     chdir: /etc/apache2/sslcerts
-    creates: '{{ ansible_hostname }}.crt'
+    creates: "{{ ansible_facts['fqdn'] }}.crt"
