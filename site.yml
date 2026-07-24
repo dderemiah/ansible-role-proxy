@@ -1,0 +1,7 @@
+---
+
+- name: Deploy a reverse proxy
+  hosts: all
+  become: true
+  roles:
+    - role: "{{ playbook_dir }}"
