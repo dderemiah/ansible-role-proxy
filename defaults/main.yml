@@ -2,3 +2,5 @@
 ---
 # defaults file for ansible-role-proxy
 apache_vhosts_template: 'proxy_generic.conf.j2'
+
+proxy_port: 3000

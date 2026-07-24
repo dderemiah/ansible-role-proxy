@@ -15,8 +15,8 @@
         Allow from all
     </Proxy>
 
-    ProxyPass         /  http://localhost:3000/ nocanon
-    ProxyPassReverse  /  http://localhost:3000/
+    ProxyPass         /  http://localhost:{{ proxy_port }}/ nocanon
+    ProxyPassReverse  /  http://localhost:{{ proxy_port }}/
     RequestHeader set X-Forwarded-Proto "https"
     RequestHeader set X-Forwarded-Port "443"
     SSLSessionTickets off

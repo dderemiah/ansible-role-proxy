@@ -15,16 +15,16 @@
     </Proxy>
 
     <Location />
-        ProxyPass http://127.0.0.1:3000/
-        ProxyPassReverse http://127.0.0.1:3000/
+        ProxyPass http://127.0.0.1:{{ proxy_port }}/
+        ProxyPassReverse http://127.0.0.1:{{ proxy_port }}/
     </Location>
 
     <Location /api/ws>
         RewriteCond %{HTTP:Connection} Upgrade [NC]
         RewriteCond %{HTTP:Upgrade} websocket [NC]
 
-        ProxyPass ws://127.0.0.1:3000/api/ws/
-        ProxyPassReverse ws://127.0.0.1:3000/api/ws/
+        ProxyPass ws://127.0.0.1:{{ proxy_port }}/api/ws/
+        ProxyPassReverse ws://127.0.0.1:{{ proxy_port }}/api/ws/
 
     </Location>
 
